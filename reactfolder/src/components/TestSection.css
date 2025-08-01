@@ -1,0 +1,16 @@
+.test-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.test-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.test-section p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}

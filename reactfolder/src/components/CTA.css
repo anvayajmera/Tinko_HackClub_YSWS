@@ -1,0 +1,23 @@
+.cta-section {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+}
+
+.cta-section .section-title {
+  color: white;
+}
+
+.cta-section .section-description {
+  color: var(--gray-300);
+}
+
+.cta-section .btn-primary {
+  background: white;
+  color: var(--primary);
+  border-color: white;
+}
+
+.cta-section .btn-primary:hover {
+  background: var(--gray-100);
+}
