@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YSWS Hack Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-shadow: rgba(244, 63, 94, 0.35);
+      --main-gradient: linear-gradient(90deg, #a78bfa, #f43f5e);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 10;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--main-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      color: #eee;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #f43f5e;
+    }
+
+    header {
+      padding-top: 100px;
+      max-width: 1100px;
+      margin: auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      background: var(--main-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #bbb;
+      margin-top: 1rem;
+    }
+
+    .astro {
+      width: 280px;
+      height: 280px;
+      margin: 2rem auto;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      box-shadow: 0 0 30px var(--glass-shadow);
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .glass-box {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .glass-box .text {
+      max-width: 450px;
+    }
+
+    .glass-box h2 {
+      font-size: 2rem;
+      background: var(--main-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .glass-box .graphic {
+      width: 300px;
+      height: 250px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/3/3f/Scratch_Logo.svg') center/contain no-repeat;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(255,255,255,0.1);
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .step {
+      flex: 1 1 280px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    .step:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 24px var(--glass-shadow);
+    }
+
+    .step h3 {
+      font-size: 1.3rem;
+      color: #f43f5e;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+
+  <nav>
+    <div class="logo">YSWS Hack Club</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#steps">Steps</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>YSWS Hack Club</h1>
+    <p>A community for young coders to build, learn, and innovate together.</p>
+    <model-viewer class="astro" src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" camera-controls auto-rotate></model-viewer>
+  </header>
+
+  <section id="about">
+    <div class="glass-box">
+      <div class="text">
+        <h2>About Us</h2>
+        <p>Build a coding project, like a game or app, at your school and earn an exclusive astronaut plushie. Visual code, community support, and innovation come together here.</p>
+      </div>
+      <div class="graphic"></div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="steps">
+      <div class="step">
+        <h3>Step 1: Ideate</h3>
+        <p>Think of a project idea with real-world impact or creativity — game, app, or tool!</p>
+      </div>
+      <div class="step">
+        <h3>Step 2: Build</h3>
+        <p>Use your coding skills to bring your vision to life with your team or solo.</p>
+      </div>
+      <div class="step">
+        <h3>Step 3: Submit</h3>
+        <p>Submit your project and share your journey with the Hack Club global community.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="glass-box" style="flex-direction: column; align-items: center;">
+      <h2>Contact</h2>
+      <p>Email us at <a href="mailto:yswshack@example.com" style="color:#f43f5e;">yswshack@example.com</a></p>
+      <p>Join our Discord: <a href="#" style="color:#f43f5e;">discord.gg/ysws</a></p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 YSWS Hack Club — All Rights Reserved.
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const maxStars = 100;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      createStars();
+    }
+
+    function createStars() {
+      stars = [];
+      for (let i = 0; i < maxStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          alpha: Math.random(),
+          speedX: (Math.random() - 0.5) * 0.2,
+          speedY: (Math.random() - 0.5) * 0.2,
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(244, 63, 94, ${s.alpha})`;
+        ctx.shadowColor = 'rgba(244, 63, 94, 0.7)';
+        ctx.shadowBlur = 6;
+        ctx.fill();
+      }
+    }
+
+    function updateStars() {
+      for (const s of stars) {
+        s.x += s.speedX;
+        s.y += s.speedY;
+        if (s.x < 0 || s.x > canvas.width) s.speedX *= -1;
+        if (s.y < 0 || s.y > canvas.height) s.speedY *= -1;
+      }
+    }
+
+    function animateStars() {
+      drawStars();
+      updateStars();
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animateStars();
+  </script>
+</body>
+</html>
