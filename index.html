@@ -6,14 +6,28 @@
   <title>YSWS Hack Club</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --glass-bg: rgba(255, 255, 255, 0.07);
-      --glass-border: rgba(255, 255, 255, 0.12);
-      --glass-shadow: rgba(244, 63, 94, 0.35);
-      --main-gradient: linear-gradient(90deg, #a78bfa, #f43f5e);
+      --blue-primary: #3b82f6;
+      --blue-light: #60a5fa;
+      --blue-dark: #1d4ed8;
+      --red-primary: #ef4444;
+      --red-light: #f87171;
+      --red-dark: #dc2626;
+      --purple-primary: #8b5cf6;
+      --purple-light: #a78bfa;
+      --purple-dark: #7c3aed;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
 
     * {
@@ -22,44 +36,52 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      background: #0a0a0a;
-      font-family: 'Poppins', sans-serif;
-      color: white;
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+      color: var(--gray-800);
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    #starfield {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-    }
-
+    /* Floating Navigation */
     nav {
       position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 1rem 2rem;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--gray-200);
+      border-radius: 2rem;
+      padding: 0.75rem 2rem;
+      z-index: 1000;
+      box-shadow: var(--shadow-medium);
+      transition: all 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: var(--shadow-large);
+    }
+
+    nav .nav-content {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--glass-border);
-      z-index: 10;
+      gap: 2rem;
     }
 
     nav .logo {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      background: var(--main-gradient);
+      background: linear-gradient(135deg, var(--blue-primary), var(--purple-primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     nav ul {
@@ -69,246 +91,655 @@
     }
 
     nav ul li a {
-      color: #eee;
+      color: var(--gray-800);
       text-decoration: none;
       font-weight: 500;
-      transition: 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: #f43f5e;
-    }
-
-    header {
-      padding-top: 100px;
-      max-width: 1100px;
-      margin: auto;
-      text-align: center;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      transition: all 0.3s ease;
       position: relative;
-      z-index: 2;
     }
 
-    header h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      background: var(--main-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    nav ul li a:hover,
+    nav ul li a.active {
+      background: linear-gradient(135deg, var(--blue-primary), var(--purple-primary));
+      color: white;
+      transform: translateY(-1px);
     }
 
-    header p {
-      font-size: 1.2rem;
-      color: #bbb;
-      margin-top: 1rem;
-    }
-
-    .astro {
-      width: 280px;
-      height: 280px;
-      margin: 2rem auto;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      box-shadow: 0 0 30px var(--glass-shadow);
-    }
-
-    section {
-      padding: 4rem 2rem;
-      max-width: 1100px;
-      margin: auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .glass-box {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(14px);
-      border-radius: 20px;
-      padding: 2rem;
-      margin-top: 2rem;
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .glass-box .text {
-      max-width: 450px;
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
-    .glass-box h2 {
-      font-size: 2rem;
-      background: var(--main-gradient);
+    .hero-content {
+      max-width: 800px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--blue-primary), var(--red-primary), var(--purple-primary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--gray-800);
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, var(--blue-primary), var(--purple-primary));
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: var(--shadow-medium);
+      animation: fadeInUp 1s ease-out 0.4s both;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-large);
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 6rem 2rem;
+      position: relative;
+    }
+
+    .section-blue {
+      background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue-primary) 100%);
+      color: white;
+    }
+
+    .section-red {
+      background: linear-gradient(135deg, var(--red-light) 0%, var(--red-primary) 100%);
+      color: white;
+    }
+
+    .section-purple {
+      background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-primary) 100%);
+      color: white;
+    }
+
+    .section-white {
+      background: var(--white);
+      color: var(--gray-800);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .section-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
       margin-bottom: 1rem;
     }
 
-    .glass-box .graphic {
-      width: 300px;
-      height: 250px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/3/3f/Scratch_Logo.svg') center/contain no-repeat;
-      background-color: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.1);
+    .feature-card p {
+      font-size: 1rem;
+      opacity: 0.9;
+      line-height: 1.6;
     }
 
-    .steps {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
+    /* Stats Section */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
       margin-top: 4rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .stat-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--blue-primary);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--gray-800);
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gray-900);
+      color: var(--gray-200);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
       flex-wrap: wrap;
     }
 
-    .step {
-      flex: 1 1 280px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: 0.3s ease;
+    .footer-links a {
+      color: var(--gray-200);
+      text-decoration: none;
+      transition: color 0.3s ease;
     }
 
-    .step:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 24px var(--glass-shadow);
+    .footer-links a:hover {
+      color: var(--blue-light);
     }
 
-    .step h3 {
-      font-size: 1.3rem;
-      color: #f43f5e;
-      margin-bottom: 0.5rem;
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .step p {
-      font-size: 0.95rem;
-      color: #ccc;
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      padding: 2rem;
-      color: #666;
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Floating Shapes */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .shape-1 {
+      width: 100px;
+      height: 100px;
+      background: var(--blue-primary);
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .shape-2 {
+      width: 150px;
+      height: 150px;
+      background: var(--red-primary);
+      top: 60%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+
+    .shape-3 {
+      width: 80px;
+      height: 80px;
+      background: var(--purple-primary);
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0.5rem 1rem;
+        border-radius: 1.5rem;
+      }
+
+      nav .nav-content {
+        gap: 1rem;
+      }
+
+      nav ul {
+        gap: 0.5rem;
+      }
+
+      nav ul li a {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.8rem;
+      }
+
+      .section {
+        padding: 4rem 1rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .feature-card {
+        padding: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .footer-links {
+        gap: 1rem;
+      }
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gray-200);
+      z-index: 9999;
+    }
+
+    .scroll-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue-primary), var(--red-primary), var(--purple-primary));
+      width: 0%;
+      transition: width 0.1s ease;
     }
   </style>
 </head>
 <body>
-  <canvas id="starfield"></canvas>
+  <div class="scroll-indicator">
+    <div class="scroll-progress"></div>
+  </div>
 
-  <nav>
-    <div class="logo">YSWS Hack Club</div>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#steps">Steps</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+  <nav id="navbar">
+    <div class="nav-content">
+      <div class="logo">YSWS Hack Club</div>
+      <ul>
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#stats" class="nav-link">Stats</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <header>
-    <h1>YSWS Hack Club</h1>
-    <p>A community for young coders to build, learn, and innovate together.</p>
-    <model-viewer class="astro" src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" camera-controls auto-rotate></model-viewer>
-  </header>
-
-  <section id="about">
-    <div class="glass-box">
-      <div class="text">
-        <h2>About Us</h2>
-        <p>Build a coding project, like a game or app, at your school and earn an exclusive astronaut plushie. Visual code, community support, and innovation come together here.</p>
-      </div>
-      <div class="graphic"></div>
+  <section id="hero" class="hero">
+    <div class="hero-background">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Welcome to YSWS Hack Club</h1>
+      <p>Building the future, one line of code at a time. Join our vibrant community of young innovators and creators.</p>
+      <a href="#about" class="cta-button">Start Your Journey</a>
     </div>
   </section>
 
-  <section id="steps">
-    <div class="steps">
-      <div class="step">
-        <h3>Step 1: Ideate</h3>
-        <p>Think of a project idea with real-world impact or creativity — game, app, or tool!</p>
-      </div>
-      <div class="step">
-        <h3>Step 2: Build</h3>
-        <p>Use your coding skills to bring your vision to life with your team or solo.</p>
-      </div>
-      <div class="step">
-        <h3>Step 3: Submit</h3>
-        <p>Submit your project and share your journey with the Hack Club global community.</p>
+  <section id="about" class="section section-blue">
+    <div class="container">
+      <h2 class="section-title">About Our Community</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3>Innovation First</h3>
+          <p>We believe in pushing boundaries and exploring new technologies to create amazing projects that make a real impact.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3>Collaborative Learning</h3>
+          <p>Learn together, grow together. Our community thrives on collaboration and peer-to-peer learning experiences.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💡</div>
+          <h3>Creative Solutions</h3>
+          <p>Transform your wildest ideas into reality with the power of code and the support of our amazing community.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="contact">
-    <div class="glass-box" style="flex-direction: column; align-items: center;">
-      <h2>Contact</h2>
-      <p>Email us at <a href="mailto:yswshack@example.com" style="color:#f43f5e;">yswshack@example.com</a></p>
-      <p>Join our Discord: <a href="#" style="color:#f43f5e;">discord.gg/ysws</a></p>
+  <section id="features" class="section section-red">
+    <div class="container">
+      <h2 class="section-title">What We Offer</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Project-Based Learning</h3>
+          <p>Build real applications, games, and tools while learning cutting-edge technologies and best practices.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌟</div>
+          <h3>Mentorship Program</h3>
+          <p>Get guidance from experienced developers and industry professionals who are passionate about helping you grow.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <h3>Hackathons & Events</h3>
+          <p>Participate in exciting competitions, workshops, and networking events throughout the year.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stats" class="section section-white">
+    <div class="container">
+      <h2 class="section-title">Our Impact</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number" data-target="500">0</span>
+          <div class="stat-label">Active Members</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="150">0</span>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="25">0</span>
+          <div class="stat-label">Workshops Hosted</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="12">0</span>
+          <div class="stat-label">Partner Schools</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section section-purple">
+    <div class="container">
+      <h2 class="section-title">Get Involved</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📧</div>
+          <h3>Join Our Newsletter</h3>
+          <p>Stay updated with the latest events, workshops, and opportunities in our community.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Discord Community</h3>
+          <p>Connect with fellow hackers, ask questions, and collaborate on projects in real-time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📍</div>
+          <h3>Local Chapters</h3>
+          <p>Find or start a local chapter at your school and bring the hackathon spirit to your community.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 YSWS Hack Club — All Rights Reserved.
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#support">Support</a>
+        <a href="#careers">Careers</a>
+      </div>
+      <p>&copy; 2025 YSWS Hack Club. All rights reserved. Built with ❤️ by our community.</p>
+    </div>
   </footer>
 
   <script>
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    const maxStars = 100;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      createStars();
+    // Scroll Progress Indicator
+    function updateScrollProgress() {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.querySelector('.scroll-progress').style.width = scrollPercent + '%';
     }
 
-    function createStars() {
-      stars = [];
-      for (let i = 0; i < maxStars; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5,
-          alpha: Math.random(),
-          speedX: (Math.random() - 0.5) * 0.2,
-          speedY: (Math.random() - 0.5) * 0.2,
-        });
+    // Navbar scroll effect
+    function updateNavbar() {
+      const navbar = document.getElementById('navbar');
+      if (window.pageYOffset > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
       }
     }
 
-    function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (const s of stars) {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = `rgba(244, 63, 94, ${s.alpha})`;
-        ctx.shadowColor = 'rgba(244, 63, 94, 0.7)';
-        ctx.shadowBlur = 6;
-        ctx.fill();
-      }
+    // Smooth scroll and active nav links
+    function updateActiveNavLink() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop <= 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
     }
 
-    function updateStars() {
-      for (const s of stars) {
-        s.x += s.speedX;
-        s.y += s.speedY;
-        if (s.x < 0 || s.x > canvas.width) s.speedX *= -1;
-        if (s.y < 0 || s.y > canvas.height) s.speedY *= -1;
-      }
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animatable elements
+    document.addEventListener('DOMContentLoaded', () => {
+      const animateElements = document.querySelectorAll('.section-title, .feature-card, .stat-item');
+      animateElements.forEach(el => {
+        observer.observe(el);
+      });
+
+      // Add staggered animation delays to feature cards
+      document.querySelectorAll('.feature-card').forEach((card, index) => {
+        card.style.transitionDelay = `${index * 0.1}s`;
+      });
+
+      // Add staggered animation delays to stat items
+      document.querySelectorAll('.stat-item').forEach((item, index) => {
+        item.style.transitionDelay = `${index * 0.1}s`;
+      });
+    });
+
+    // Counter animation for stats
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+
+        const updateCounter = () => {
+          current += increment;
+          if (current < target) {
+            counter.textContent = Math.floor(current);
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target;
+          }
+        };
+
+        // Start animation when element is visible
+        const counterObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              updateCounter();
+              counterObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+
+        counterObserver.observe(counter);
+      });
     }
 
-    function animateStars() {
-      drawStars();
-      updateStars();
-      requestAnimationFrame(animateStars);
-    }
+    // Event listeners
+    window.addEventListener('scroll', () => {
+      updateScrollProgress();
+      updateNavbar();
+      updateActiveNavLink();
+    });
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    animateStars();
+    // Smooth scrolling for nav links
+    document.querySelectorAll('.nav-link, .cta-button').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          const offsetTop = targetElement.offsetTop - 100;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      animateCounters();
+      updateScrollProgress();
+      updateNavbar();
+      updateActiveNavLink();
+    });
+
+    // Add subtle parallax effect
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const shapes = document.querySelectorAll('.shape');
+      shapes.forEach((shape, index) => {
+        const rate = scrolled * -0.5 * (index + 1);
+        shape.style.transform = `translateY(${rate}px)`;
+      });
+    });
   </script>
 </body>
 </html>
