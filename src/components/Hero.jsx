@@ -5,7 +5,6 @@ const Hero = () => {
   const particlesRef = useRef(null);
 
   useEffect(() => {
-    // Create floating particles
     const createParticles = () => {
       if (particlesRef.current) {
         for (let i = 0; i < 20; i++) {
@@ -19,7 +18,6 @@ const Hero = () => {
       }
     };
 
-    // Parallax effect for hero grid
     const handleParallax = () => {
       const scrolled = window.pageYOffset;
       const heroGrid = document.querySelector('.hero-grid');
@@ -48,16 +46,16 @@ const Hero = () => {
       <div className="particles" ref={particlesRef}></div>
       <div className="hero-content">
         <div className="hero-badge">
-          <span>Now Open for Applications</span>
+          <span>🚀 Hack Club YSWS 2025</span>
         </div>
-        <h1 className="glow-text">React is SO Much Better!</h1>
+        <h1 className="glow-text">Build. Code. Get Hardware.</h1>
         <p className="hero-subtitle">
-          See how easy it is to change things? No more hunting through 1600+ lines of code! 
-          React components make everything modular and super easy to update.
+          Create amazing sensor data dashboards and earn real Arduino or micro:bit kits. 
+          Join young makers worldwide turning code into physical innovations.
         </p>
         <div className="hero-cta">
-          <a href="#about" className="btn btn-primary">Start Building</a>
-          <a href="#features" className="btn btn-secondary">Learn More</a>
+          <a href="#tutorials" className="btn btn-primary">Start Building</a>
+          <a href="#about" className="btn btn-secondary">Learn More</a>
         </div>
       </div>
     </section>

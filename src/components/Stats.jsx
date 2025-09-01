@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import './Stats.css';
 
 const Stats = () => {
-  const [headerRef, headerVisible] = useIntersectionObserver();
   const [countersStarted, setCountersStarted] = useState(false);
   const statsRef = useRef(null);
   const svgPathRef = useRef(null);
@@ -19,89 +17,88 @@ const Stats = () => {
 
   useEffect(() => {
     const statsPath = svgPathRef.current;
-    const statsSection = statsRef.current;
-
-    if (statsPath && statsSection) {
-      const scrollStartOffset = 0.25;
-      const maxStrokeWidth = 40;
-      const minStrokeWidth = 10;
-      const animationSpeedFactor = 0.8;
-
+    
+    if (statsPath) {
       const pathLength = statsPath.getTotalLength();
       statsPath.style.strokeDasharray = pathLength + ' ' + pathLength;
       statsPath.style.strokeDashoffset = pathLength;
 
-      const handleStatsScroll = () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const sectionTop = statsSection.offsetTop;
-        const sectionHeight = statsSection.offsetHeight;
-        const viewportHeight = window.innerHeight;
-        const scrollDistance = scrollTop - sectionTop;
+      const handleScroll = () => {
+        const rect = statsRef.current?.getBoundingClientRect();
+        if (!rect) return;
 
-        if (scrollDistance >= -viewportHeight && scrollDistance <= sectionHeight * animationSpeedFactor) {
-          const progress = (scrollDistance + viewportHeight) / ((sectionHeight + viewportHeight) * animationSpeedFactor);
-          const adjustedProgress = (progress - scrollStartOffset) / (1 - scrollStartOffset);
-          const finalProgress = Math.max(0, Math.min(1, adjustedProgress));
-          
-          const drawLength = pathLength * finalProgress;
-          statsPath.style.strokeDashoffset = pathLength - drawLength;
+        const windowHeight = window.innerHeight;
+        const elementTop = rect.top;
+        const elementHeight = rect.height;
+        const progress = Math.max(0, Math.min(1, 
+          (windowHeight - elementTop) / (windowHeight + elementHeight)
+        ));
 
-          const currentStrokeWidth = maxStrokeWidth - (finalProgress * (maxStrokeWidth - minStrokeWidth));
-          statsPath.style.strokeWidth = `${currentStrokeWidth}px`;
-        }
+        const drawLength = pathLength * progress;
+        statsPath.style.strokeDashoffset = pathLength - drawLength;
+
+        const strokeWidth = 100 - (progress * 20);
+        statsPath.style.strokeWidth = `${Math.max(60, strokeWidth)}px`;
+
+        statsPath.style.stroke = 'url(#lineGradient)';
+        statsPath.style.opacity = '1';
       };
       
-      window.addEventListener('scroll', handleStatsScroll);
-      handleStatsScroll();
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
 
-      return () => window.removeEventListener('scroll', handleStatsScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
     }
   }, []);
 
-  const animateCounters = () => {
-    if (countersStarted) return;
-    
-    setCountersStarted(true);
-    const duration = 2000;
-    
-    stats.forEach((stat, index) => {
-      const increment = stat.number / (duration / 16);
-      let current = 0;
-
-      const updateCounter = () => {
-        current += increment;
-        if (current < stat.number) {
-          setStatValues(prev => {
-            const newValues = [...prev];
-            newValues[index] = Math.floor(current);
-            return newValues;
-          });
-          requestAnimationFrame(updateCounter);
-        } else {
-          setStatValues(prev => {
-            const newValues = [...prev];
-            newValues[index] = stat.number;
-            return newValues;
-          });
-        }
-      };
-
-      updateCounter();
-    });
-  };
-
-  const [counterRef, counterVisible] = useIntersectionObserver({ threshold: 0.5 });
-
   useEffect(() => {
-    if (counterVisible && !countersStarted) {
-      animateCounters();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !countersStarted) {
+            setCountersStarted(true);
+            
+            
+            stats.forEach((stat, index) => {
+              let startTime = null;
+              const duration = 2000;
+              
+              const animate = (timestamp) => {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                
+                const currentValue = Math.floor(stat.number * progress);
+                
+                setStatValues(prev => {
+                  const newValues = [...prev];
+                  newValues[index] = currentValue;
+                  return newValues;
+                });
+                
+                if (progress < 1) {
+                  requestAnimationFrame(animate);
+                }
+              };
+              
+              requestAnimationFrame(animate);
+            });
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
     }
-  }, [counterVisible, countersStarted]);
+
+    return () => observer.disconnect();
+  }, [countersStarted]);
 
   return (
-    <section id="stats" className="section stats-section" ref={statsRef}>
-      {/* Animated Line SVG */}
-      <svg id="stats-line-svg" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+    <section id="stats" className="stats-section" ref={statsRef}>
+      
+      <svg className="stats-line-svg" viewBox="0 0 1200 1000" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <defs>
           <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style={{stopColor:'#0066ff', stopOpacity:1}} />
@@ -111,31 +108,29 @@ const Stats = () => {
         </defs>
         <path 
           ref={svgPathRef}
-          id="stats-scroll-line" 
-          d="M 100 300 Q 300 150 500 250 T 900 200 Q 1000 180 1100 220"
-          strokeWidth="40"
+          d="M 0 500 L 1200 500"
+          strokeWidth="100"
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
           stroke="url(#lineGradient)"
+          opacity="1"
         />
       </svg>
       
-      <div className="container stats-container">
-        <div 
-          ref={headerRef}
-          className={`section-header fade-in ${headerVisible ? 'visible' : ''}`}
-        >
-          <div className="section-badge holographic">Our Impact</div>
+      <div className="stats-container">
+        <div className="stats-header">
+          <div className="section-badge">Our Impact</div>
           <h2 className="section-title">Growing Global Community</h2>
           <p className="section-description">
             Numbers that reflect our commitment to nurturing the next generation of tech leaders.
           </p>
         </div>
-        <div className="stats-grid" ref={counterRef}>
+        
+        <div className="stats-grid">
           {stats.map((stat, index) => (
-            <div key={index} className="stat-item fade-in">
-              <span className="stat-number">{statValues[index]}</span>
+            <div key={index} className="stat-item">
+              <div className="stat-number">{statValues[index]}</div>
               <div className="stat-label">{stat.label}</div>
             </div>
           ))}

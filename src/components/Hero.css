@@ -178,7 +178,6 @@
   animation: slideUp 0.8s ease-out 0.8s forwards;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .floating-shape {
     display: none;

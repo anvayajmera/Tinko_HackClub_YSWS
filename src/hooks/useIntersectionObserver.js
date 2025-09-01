@@ -17,7 +17,6 @@ const useIntersectionObserver = (options = {}) => {
         setIsVisible(true);
         setHasBeenVisible(true);
       } else {
-        // For reversible animations, remove visible class when scrolling back up
         setIsVisible(false);
       }
     }, defaultOptions);

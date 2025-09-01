@@ -31,18 +31,18 @@ const Navbar = () => {
       updateActiveNavLink();
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
     { href: '#hero', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#features', label: 'Features' },
-    { href: '#stats', label: 'Impact' },
-    { href: '#contact', label: 'Contact' },
+    { href: '#tutorials', label: 'Begin' },
+    { href: '#about', label: 'Mission' },
+    { href: '#stats', label: 'Stats' },
+    { href: '#contact', label: 'Submit' },
   ];
 
   return (

@@ -12,8 +12,8 @@ const ScrollProgressLine = () => {
       setScrollProgress(scrollPercent);
     };
 
-    window.addEventListener('scroll', updateScrollProgress);
-    updateScrollProgress(); // Initial call
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
 
     return () => window.removeEventListener('scroll', updateScrollProgress);
   }, []);
