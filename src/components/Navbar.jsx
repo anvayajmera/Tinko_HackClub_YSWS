@@ -39,16 +39,16 @@ const Navbar = () => {
 
   const navLinks = [
     { href: '#hero', label: 'Home' },
-    { href: '#tutorials', label: 'Begin' },
-    { href: '#about', label: 'Mission' },
-    { href: '#stats', label: 'Stats' },
+    { href: '#tutorials', label: 'How It Works' },
+    { href: '#about', label: 'Overview' },
+    { href: '#stats', label: 'Rewards' },
     { href: '#contact', label: 'Submit' },
   ];
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        <div className="logo">YSWS</div>
+        <div className="logo">tinko</div>
         <ul className="nav-links">
           {navLinks.map(({ href, label }) => (
             <li key={href}>

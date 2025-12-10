@@ -1,17 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import './Tutorials.css';
 
 const Tutorials = () => {
   const [headerRef, headerVisible] = useIntersectionObserver();
-  const [path1Ref, path1Visible] = useIntersectionObserver();
-  const [path2Ref, path2Visible] = useIntersectionObserver();
-  const [hoveredPath, setHoveredPath] = useState(null);
-  const [activePath, setActivePath] = useState(null);
   const particleSystemRef = useRef(null);
 
   useEffect(() => {
-    
     const createParticleSystem = () => {
       if (particleSystemRef.current) {
         for (let i = 0; i < 40; i++) {
@@ -29,100 +24,33 @@ const Tutorials = () => {
     createParticleSystem();
   }, []);
 
-  const handleRippleClick = (e) => {
-    const button = e.currentTarget;
-    const ripple = document.createElement('span');
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    ripple.classList.add('ripple-effect');
-    
-    button.appendChild(ripple);
-    
-    setTimeout(() => {
-      ripple.remove();
-    }, 600);
-  };
-
-  const paths = [
+  const steps = [
     {
-      id: 'introduction',
-      title: 'Foundation Track',
-      subtitle: 'Beginner Path',
-      audience: 'Early Coders',
-      location: 'Ghana Students',
-      reward: 'Micro:bit Kit',
-      difficulty: 'Beginner',
-      duration: '6 weeks',
-      description: 'Perfect foundation for young innovators starting their technology journey.',
-      features: [
-        'Visual programming environment',
-        'Hardware prototyping basics',
-        'Interactive dashboard creation'
+      title: 'Build a physical project',
+      points: [
+        'Any level is acceptable, from a simple sensor box to advanced robots.',
+        'Combine hardware, basic circuitry, and hands-on assembly.',
+        'Keep the build small and focused so it fits an enclosure.',
       ],
-      color: 'blue',
-      gradient: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%)',
-      icon: 'microbit'
     },
     {
-      id: 'advanced',
-      title: 'Professional Track',
-      subtitle: 'Advanced Path', 
-      audience: 'Advanced Coders',
-      location: 'US High Schools',
-      reward: 'Arduino Mega Kit',
-      difficulty: 'Advanced',
-      duration: '8 weeks',
-      description: 'Intensive program for experienced developers ready for industry challenges.',
-      features: [
-        'Professional development workflows',
-        'Advanced IoT architectures',
-        'Machine learning integration'
+      title: 'Design a custom CAD enclosure',
+      points: [
+        'Use an approved CAD tool (Autodesk or Onshape) and follow the 3D-printer guidelines.',
+        'Make sure the enclosure fits your hardware and is printer ready.',
+        'Check wall thickness, tolerances, and fastening before exporting.',
+        'Document CAD choices so reviewers can reproduce prints.',
       ],
-      color: 'purple',
-      gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%)',
-      icon: 'arduino'
-    }
+    },
+    {
+      title: 'Submit, get reviewed, and earn tokens',
+      points: [
+        'On GitHub include pictures, a video demo, the CAD model, hourly logs, and a summary.',
+        'Submit via Hack Club Forms on the Tinko site with your club details.',
+        'After approval, token credits go to the club bank to redeem parts or a 3D printer.',
+      ],
+    },
   ];
-
-  const render3DModel = (type) => {
-    if (type === 'microbit') {
-      return (
-        <div className="model-3d microbit-model">
-          <div className="board-simple">
-            <div className="led-grid">
-              {Array.from({ length: 9 }, (_, i) => (
-                <div key={i} className={`led led-${i + 1}`}></div>
-              ))}
-            </div>
-            <div className="buttons-simple">
-              <div className="btn-simple btn-a"></div>
-              <div className="btn-simple btn-b"></div>
-            </div>
-          </div>
-        </div>
-      );
-    } else if (type === 'arduino') {
-      return (
-        <div className="model-3d arduino-model">
-          <div className="board-simple">
-            <div className="chip-simple"></div>
-            <div className="pins-simple">
-              {Array.from({ length: 8 }, (_, i) => (
-                <div key={i} className="pin-simple"></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (
     <section id="tutorials" className="tutorials-section-enhanced">
@@ -145,78 +73,40 @@ const Tutorials = () => {
       </div>
 
       <div className="container">
-        <div 
+        <div
           ref={headerRef}
           className={`section-header-enhanced fade-in reveal-left swoop ${headerVisible ? 'visible' : ''}`}
         >
           <div className="section-badge-enhanced">
-            <span className="badge-icon">Learning Paths</span>
+            <span className="badge-icon">How it works</span>
           </div>
-          <h2 className="section-title-enhanced">Choose Your Journey</h2>
+          <h2 className="section-title-enhanced">Three steps to Tinko</h2>
           <p className="section-description-enhanced">
-            Two distinct tracks designed for different skill levels and learning objectives.
+            A simple, three-step flow that takes your club from idea to a reviewed, 3D-printer-ready project
+            with components delivered to you.
           </p>
         </div>
 
-  <div className="paths-container-enhanced stagger-group">
-          {paths.map((path, index) => (
-            <div
-              key={path.id}
-              ref={index === 0 ? path1Ref : path2Ref}
-              className={`path-card-enhanced reveal-up stagger-${index + 1} ${
-                index === 0 ? (path1Visible ? 'visible' : '') : (path2Visible ? 'visible' : '')
-              } ${hoveredPath === path.id ? 'hovered' : ''} ${activePath === path.id ? 'active' : ''}`}
-              onMouseEnter={() => setHoveredPath(path.id)}
-              onMouseLeave={() => setHoveredPath(null)}
-              onClick={() => setActivePath(activePath === path.id ? null : path.id)}
-            >
-              <div className="card-glow-enhanced" style={{ background: path.gradient }}></div>
+        <div className="paths-container-enhanced timeline">
+          {steps.map((step, index) => (
+            <div key={step.title} className={`path-card-enhanced timeline-card stagger-${index + 1}`}>
+              <div className="card-glow-enhanced"></div>
               <div className="card-header-enhanced">
                 <div className="path-number">{index + 1}</div>
-                <div className="path-icon">
-                  {render3DModel(path.icon)}
-                </div>
                 <div className="path-info">
-                  <h3 className="path-title">{path.title}</h3>
-                  <p className="path-subtitle">{path.subtitle}</p>
-                </div>
-                <div className="difficulty-badge" style={{ background: path.gradient }}>
-                  {path.difficulty}
+                  <h3 className="path-title">{step.title}</h3>
                 </div>
               </div>
 
               <div className="card-content-enhanced">
-                <p className="path-description">{path.description}</p>
-                <div className="path-meta-enhanced">
-                  <div className="meta-item">
-                    <span className="meta-label">Target:</span>
-                    <span className="meta-value">{path.audience}</span>
-                  </div>
-                  <div className="meta-item">
-                    <span className="meta-label">Reward:</span>
-                    <span className="meta-value">{path.reward}</span>
-                  </div>
-                </div>
-                <div className="learn-section-glass">
-                  <h4 className="learn-title-glass">What You'll Learn</h4>
-                  <ul className="learn-list-glass">
-                    {path.features.map((feature, idx) => (
-                      <li key={idx} className="learn-item-glass">
-                        <span className="learn-text-glass">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="path-action-enhanced">
-                  <button 
-                    className="btn-enhanced ripple"
-                    style={{ background: path.gradient }}
-                    onClick={handleRippleClick}
-                  >
-                    <span className="btn-text">Begin {path.title}</span>
-                    <div className="btn-glow"></div>
-                  </button>
-                </div>
+                <ul className="step-points">
+                  {step.points.map((point) => (
+                    <li key={point}>
+                      <span className="glow-dot" aria-hidden="true"></span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}

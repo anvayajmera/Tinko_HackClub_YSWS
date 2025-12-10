@@ -169,6 +169,13 @@
   letter-spacing: -0.025em;
 }
 
+.hero-subtitle.secondary {
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+  color: var(--gray-700);
+  font-size: 1.1rem;
+}
+
 .hero-cta {
   display: flex;
   gap: 1rem;

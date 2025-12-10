@@ -7,16 +7,16 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-main">
             <div className="footer-brand">
-              <h3>Hack Club YSWS</h3>
-              <p>Young Makers, Real Hardware</p>
+              <h3>tinko</h3>
+              <p>Design CAD for a project inside, get components delivered to your club.</p>
             </div>
             
             <div className="footer-links">
               <div className="link-group">
                 <h4>Program</h4>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#paths">Choose Path</a>
-                <a href="#tutorials">Tutorials</a>
+                <a href="#tutorials">How it works</a>
+                <a href="#about">Overview</a>
+                <a href="#stats">Submission checklist</a>
               </div>
               
               <div className="link-group">
@@ -28,20 +28,20 @@ const Footer = () => {
               
               <div className="link-group">
                 <h4>Support</h4>
-                <a href="/help">Help Center</a>
-                <a href="/contact">Contact</a>
-                <a href="/shipping">Shipping Info</a>
+                <a href="#contact">Start a build</a>
+                <a href="#tutorials">Step-by-step</a>
+                <a href="#about">Share with clubs</a>
               </div>
             </div>
           </div>
           
           <div className="footer-bottom">
             <div className="footer-info">
-              <p>&copy; 2025 Hack Club YSWS. Built with ❤️ by young makers.</p>
+              <p>&copy; 2025 Hack Club Tinko. Built with ❤️ by young makers.</p>
               <div className="footer-badges">
-                <span className="badge">🌍 Global Shipping</span>
-                <span className="badge">📦 Free Hardware</span>
-                <span className="badge">🚀 Open Source</span>
+                <span className="badge">CAD-first</span>
+                <span className="badge">Club-friendly</span>
+                <span className="badge">Hardware included</span>
               </div>
             </div>
           </div>

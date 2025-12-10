@@ -46,16 +46,19 @@ const Hero = () => {
       <div className="particles" ref={particlesRef}></div>
       <div className="hero-content">
         <div className="hero-badge">
-          <span>🚀 Hack Club YSWS 2025</span>
+          <span>Hack Club Tinko YSWS</span>
         </div>
-        <h1 className="glow-text">Build. Code. Get Hardware.</h1>
+        <h1 className="glow-text">Tinko</h1>
         <p className="hero-subtitle">
-          Create amazing sensor data dashboards and earn real Arduino or micro:bit kits. 
-          Join young makers worldwide turning code into physical innovations.
+          Design CAD for a project, get components delivered to you!
+        </p>
+        <p className="hero-subtitle secondary">
+          A simple, club-friendly initiative that combines hardware and CAD design. Build a small device,
+          design a custom CAD enclosure, and unlock components and rewards for your club.
         </p>
         <div className="hero-cta">
-          <a href="#tutorials" className="btn btn-primary">Start Building</a>
-          <a href="#about" className="btn btn-secondary">Learn More</a>
+          <a href="#tutorials" className="btn btn-primary">See How It Works</a>
+          <a href="#about" className="btn btn-secondary">Program Overview</a>
         </div>
       </div>
     </section>

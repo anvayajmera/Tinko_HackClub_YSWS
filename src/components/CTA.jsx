@@ -48,34 +48,35 @@ const CTA = () => {
           className={`cta-content-new swoop stagger-group ${headerVisible ? 'visible' : ''}`}
         >
           <div className="cta-header-new">
-            <div className="cta-badge">Join the Revolution</div>
-            <h2 className="cta-title-new">
-              Ready to Shape the 
-              <span className="highlight-text-new"> Future of STEM</span>?
-            </h2>
+  <div className="cta-badge">Start a Tinko build</div>
+
+  <h2 className="cta-title-new">
+    Ready to design CAD <br />
+    <span className="highlight-text-new">and ship hardware?</span>
+  </h2>
             <p className="cta-description-new">
-              Join a community of young scientists, engineers, and innovators. 
-              Develop cutting-edge projects, master new technologies, and solve real-world problems through STEM.
+              Share the flow with your club, build something real, design the enclosure, and submit the
+              finished project to unlock components delivered to you.
             </p>
           </div>
 
           <div className="cta-actions-new">
-            <a href="/apply" className="cta-primary-btn-new">
-              <span>Submit Your Project</span>
+            <a href="#tutorials" className="cta-primary-btn-new">
+              <span>Follow the steps</span>
               <div className="btn-glow"></div>
             </a>
             
             <div className="cta-secondary-actions-new">
-              <a href="#tutorials" className="secondary-link-new">
-                <span>View Tutorials</span>
+              <a href="#about" className="secondary-link-new">
+                <span>Program overview</span>
                 <div className="link-underline"></div>
               </a>
                 <a href="https://discord.gg/hackclub" className="secondary-link-new">
                   <span>Join Community</span>
                   <div className="link-underline"></div>
                 </a>
-              <a href="#about" className="secondary-link-new">
-                <span>Learn More</span>
+              <a href="#stats" className="secondary-link-new">
+                <span>Submission checklist</span>
                 <div className="link-underline"></div>
               </a>
             </div>

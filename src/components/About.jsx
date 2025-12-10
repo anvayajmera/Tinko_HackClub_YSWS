@@ -30,22 +30,25 @@ const About = () => {
   const features = [
     {
       id: '01',
-      title: 'Innovation-First Mindset',
-      description: 'We believe in thinking differently, challenging conventions, and building solutions that matter. Every project starts with a question: how can we make this better?',
-  iconPath: 'M13 10V3L4 14h7v7l9-11h-7z'
+      title: 'Club-friendly overview',
+      description:
+        'The Tinko YSWS, run through Hack Club, is a simple yet club-friendly initiative that combines hardware and CAD design into a functional project.',
+      iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
     },
     {
       id: '02',
-      title: 'Collaborative Excellence',
-      description: 'Great ideas emerge from great teams. Our community thrives on collaboration, peer learning, and the exchange of diverse perspectives.',
-  iconPath: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+      title: 'Build + CAD together',
+      description:
+        'Members build a small device and design a custom CAD enclosure, learning CAD fundamentals, basic circuitry, and hands-on assembly along the way.',
+      iconPath: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
     },
     {
       id: '03',
-      title: 'Real-World Impact',
-      description: 'We don\'t just code for fun—we code for purpose. Every project aims to solve real problems and create meaningful change in our communities.',
-  iconPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'
-    }
+      title: 'Rewards for the club',
+      description:
+        'After review, token credits go to the club bank and can be redeemed for electronics, club goodies, and more, with the top reward being a 3D printer.',
+      iconPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
+    },
   ];
 
   const cardRefs = [card1Ref, card2Ref, card3Ref];
@@ -74,14 +77,11 @@ const About = () => {
           ref={headerRef}
           className={`section-header fade-in reveal-left swoop ${headerVisible ? 'visible' : ''}`}
         >
-          <div className="section-badge">Our Mission</div>
-          <h2 className="section-title">Empowering Tomorrow's Innovators</h2>
+          <div className="section-badge">Overview</div>
+          <h2 className="section-title">Why Tinko works for clubs</h2>
           <p className="section-description">
-            We're building a community where young minds converge to create, learn, 
-            and push the boundaries of what's possible with technology.
-          </p>
-          <p className="section-subdescription">
-            Short, hands-on learning, mentorship, and projects that turn ideas into impact.
+            A straightforward way for Hack Club members to design, build, and submit projects with
+            club-level rewards that keep future builds funded.
           </p>
         </div>
         
